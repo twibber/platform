@@ -1,24 +1,32 @@
-import {H1} from "@/components/Typography";
-import {Button} from "@/components/ui/button";
-import {toast} from "sonner";
 import Layout from "@/components/Layout";
 import {useQuery} from "@tanstack/react-query";
-import CodeBlock from "@/components/Codeblock";
+import {CreatePost, Post} from "@/components/Post";
 
 export default function Home() {
-	// Get account data if authenticated it will return the data, otherwise it will return an error
-	const {data: accountData, error: accountError} = useQuery({
+	// get the user's account data
+	const {data: accountData, isSuccess: accountSuccess} = useQuery({
 		queryKey: ["/account"],
 	});
 
-	// Get server status data, always returns the same data, and it's not an error
-	const {data: serverData, error: serverError} = useQuery({
-		queryKey: ["/"],
+	// get a list of posts from the API
+	const {data: postsData, isLoading: loadingPosts, isSuccess: postsSuccess} = useQuery({
+		queryKey: ["/posts"],
+		refetchInterval: 5000, // Refetch the posts every 5 seconds
 	});
 
 	return (
-		<Layout title={"Feed"} className={"flex flex-col gap-8"}>
+		<Layout title={"Feed"}>
+			{/* Only show the content creation if the user is authenticated and the user's connection is verified */}
+			{accountSuccess && accountData?.connection?.verified && (
+				<CreatePost/>
+			)}
 
+			<div className={"space-y-2 py-4"}>
+				{/* Show the posts if they have been fetched */}
+				{postsSuccess && postsData?.map((post) => (
+					<Post post={post} key={post.id}/>
+				))}
+			</div>
 		</Layout>
 	);
 }

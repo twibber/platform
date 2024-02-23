@@ -24,7 +24,7 @@ import {toast} from "sonner";
 // Layout takes in a title and children and returns a layout with the title and children as well as the theming of the website
 export default function Layout({children, title, className}) {
 	// Get the account data from the server
-	const {data: accountData} = useQuery({
+	const {data: accountData, isSuccess} = useQuery({
 		queryKey: ["/account"],
 	});
 
@@ -41,18 +41,18 @@ export default function Layout({children, title, className}) {
 
 			{/* Set the layout of the page */}
 			<div className="max-w-screen-xl w-full h-full flex flex-row border-x mx-auto">
-				{/*Split the page into 4 equal parts Sidebar Takes up 1/4 of the page*/}
+				{/* Split the page into 4 equal parts sidebar takes up 1/4 of the page */}
 				<div className={"w-1/4 h-full"}>
 					<Sidebar/>
 				</div>
 
-				{/*Children takes up 2/4 of the page*/}
+				{/* Children takes up 2/4 of the page */}
 				<ScrollArea className={cn(
-					"h-screen w-2/4 border p-4",
+					"h-screen w-2/4 border-x px-4",
 					className
 				)}>
 					{/* Account Verified Alert*/}
-					{!accountData?.connection?.verified && (<VerificationAlert/>)}
+					{isSuccess && !accountData?.connection?.verified && (<VerificationAlert/>)}
 					{children}
 				</ScrollArea>
 

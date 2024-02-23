@@ -37,7 +37,7 @@ export default function Authentication() {
 					        }>Logout</Button>
 				</div>
 			) : (
-				<div className={"w-full flex flex-row gap-2"}>
+				<div className={"w-full flex flex-row gap-2 p-4"}>
 					<Dialog>
 						<DialogTrigger asChild>
 							<Button variant="default" className={"w-full"}>Login</Button>
@@ -69,7 +69,7 @@ function Login() {
 			type: "email",
 			autoComplete: "email",
 			placeholder: "Email",
-			description: "Your email is used for account recovery",
+			description: "This is the email you used to register.",
 			validate: z.string().min(1, "Email is a required field").email("Email must be a valid email address"),
 		},
 		{
@@ -98,7 +98,10 @@ function Login() {
 			onSubmit={(data) => apiFetch("POST", "/auth/login", data, {
 				notify: true,
 			})
-				.then(r => console.log(r))
+				.then(r => {
+					toast.success("Successfully logged in")
+					void queryClient.invalidateQueries() // Invalidate the account query so the user is logged in
+				})
 				.catch(e => formErrors(form, e))
 			}
 			submitLabel={"Login"}
@@ -124,7 +127,7 @@ function Register() {
 			type: "text",
 			autoComplete: "username",
 			placeholder: "Username",
-			description: "This is the name that will be used to login",
+			description: "This a unique identifier for your account",
 			validate: z.string().min(3, "Username is a required field").max(255, "Username must be less than 255 characters"),
 		},
 		{
