@@ -71,7 +71,7 @@ export default function Layout({children, title, className}) {
 function VerificationAlert() {
 	return (
 		<Dialog>
-			<Alert>
+			<Alert className={"mt-4"}>
 				<DialogTrigger asChild>
 					<Button variant={"secondary"} className={"absolute right-4 top-4"}>
 						Verify Account
