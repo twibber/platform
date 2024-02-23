@@ -119,7 +119,7 @@ function Register() {
 			autoComplete: "name",
 			placeholder: "Display Name",
 			description: "This is the name that will be displayed to other users",
-			validate: z.string().min(3, "Display name is a required field").max(255, "Display name must be less than 255 characters"),
+			validate: z.string().min(3, "Display name needs to be at least 3 characters").max(255, "Display name must be less than 255 characters"),
 		},
 		{
 			name: "username",
@@ -128,7 +128,7 @@ function Register() {
 			autoComplete: "username",
 			placeholder: "Username",
 			description: "This a unique identifier for your account",
-			validate: z.string().min(3, "Username is a required field").max(255, "Username must be less than 255 characters"),
+			validate: z.string().min(3, "Username needs to be at least 3 characters").max(255, "Username must be less than 255 characters"),
 		},
 		{
 			name: "email",
