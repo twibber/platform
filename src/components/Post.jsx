@@ -127,17 +127,31 @@ export function Post({post, key}) {
 			</div>
 
 			<CardFooter className={"flex flex-row gap-2 p-0"}>
+				<Button
+					variant={post.liked ? "destructive" : "default"}
+					onClick={() => {
+						// Toggle the liked state and increment the like count to make it seem instant.
+						post.liked = !post.liked;
+						post.counts.likes += post.liked ? 1 : -1;
+
+						let method = post.liked ? "POST" : "DELETE";
+
+						// Send a request to the server to increment the like count.
+						apiFetch(method, `/posts/${post.id}/likes`, {}, {notify: true})
+							.then(() => void queryClient.invalidateQueries({
+								queryKey: ["/posts"],
+							}))
+					}}
+				>{`${post.liked ? "Unlike" : "Like"} (${post.counts.likes})`}</Button>
 				<div className="flex-grow"/>
 				{/* The user is the author, and the post is less than 5 minutes old. */}
-				{user?.connection?.user?.id === post.author.id && (
-					<Button variant={"destructive"}
-						onClick={() =>
-							apiFetch("DELETE", `/posts/${post.id}`, {}, {notify: true})
+				{user?.connection?.user?.id === post.author.id && new Date(post.created_at) > new Date(Date.now() - 5 * 60 * 1000) && (
+					<Button
+						variant={"destructive"}
+						onClick={() => apiFetch("DELETE", `/posts/${post.id}`, {}, {notify: true})
 						        .then(() => void queryClient.invalidateQueries({
 							        queryKey: ["/posts"],
-						        }))
-						        .catch((e) => console.log(e))
-					}
+						        }))}
 					>Delete</Button>
 				)}
 			</CardFooter>
