@@ -9,7 +9,7 @@ export default function Home() {
 	});
 
 	// get a list of posts from the API
-	const {data: postsData, isLoading: loadingPosts, isSuccess: postsSuccess} = useQuery({
+	const {data: postsData, isSuccess: postsSuccess} = useQuery({
 		queryKey: ["/posts"],
 		refetchInterval: 5000, // Refetch the posts every 5 seconds
 	});
