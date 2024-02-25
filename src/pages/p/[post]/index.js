@@ -20,7 +20,6 @@ export default function PostWithReplies() {
 	// get the replies related to the current post
 	const {data: repliesData} = useQuery({
 		queryKey: [`/posts/${router.query.post}/replies`],
-		refetchInterval: 5000, // Refetch the replies every 5 seconds
 	});
 
 	return (

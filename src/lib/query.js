@@ -7,6 +7,7 @@ export const queryClient = new QueryClient({
 			queryFn: apiQuery,
 			// if the query fails, retry it 3 times unless the environment is development
 			retry: process.env.NODE_ENV === "development" ? 0 : 3,
+			refetchInterval: 500, // Refetch the replies every 100 milliseconds
 		},
 	},
 })
