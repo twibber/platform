@@ -62,7 +62,7 @@ export default function Layout({children, title, className}) {
 
 			{/* Set the toaster for the page */}
 			<Toaster
-				visibleToasts={5} // Maximum number of toasts to show at once
+				visibleToasts={1} // Maximum number of toasts to show at once
 			/>
 		</ThemeProvider>
 	);

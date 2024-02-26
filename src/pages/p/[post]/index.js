@@ -2,7 +2,6 @@ import Layout from "@/components/Layout";
 import {useQuery} from "@tanstack/react-query";
 import {CreatePost, Post} from "@/components/Post";
 import {useRouter} from "next/router";
-import {H1, H2, H3} from "@/components/Typography";
 
 export default function PostWithReplies() {
 	const router = useRouter() // get the router object from the useRouter hook to access the query parameters
